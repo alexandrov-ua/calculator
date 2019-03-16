@@ -6,12 +6,12 @@ using Xunit;
 
 namespace Calculator.Tests
 {
-    public class EvaluatorTests
+    public class SyntaxThreeEvaluatorTests
     {
         [Fact]
         public void Foo()
         {
-            var parser = new Parser(new SyntaxTokenEnumerable("2+3*4"));
+            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2+3*4"));
             var parserResult = parser.Parse();
             var evaluator = new SyntaxThreeEvaluator(parserResult.Root);
             var result = evaluator.Evaluate();
@@ -21,7 +21,7 @@ namespace Calculator.Tests
         [Fact]
         public void Bar()
         {
-            var parser = new Parser(new SyntaxTokenEnumerable("2*3+4"));
+            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2*3+4"));
             var parserResult = parser.Parse();
             var evaluator = new SyntaxThreeEvaluator(parserResult.Root);
             var result = evaluator.Evaluate();

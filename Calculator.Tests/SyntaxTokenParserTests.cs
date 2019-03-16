@@ -2,17 +2,18 @@
 using System.Runtime.Remoting.Messaging;
 using Calculator.Common.Lexer;
 using Calculator.Common.Parser;
+using Calculator.Common.SyntaxThree;
 using FluentAssertions;
 using Xunit;
 
 namespace Calculator.Tests
 {
-    public class ParserTests
+    public class SyntaxTokenParserTests
     {
         [Fact]
         public void Foo()
         {
-            var parser = new Parser(new SyntaxTokenEnumerable("2+3*4"));
+            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2+3*4"));
             var res = parser.Parse();
 
             res.IsSuccessful.Should().BeTrue();
@@ -22,7 +23,7 @@ namespace Calculator.Tests
         [Fact]
         public void Bar()
         {
-            var parser = new Parser(new SyntaxTokenEnumerable("2*3+4"));
+            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2*3+4"));
             var res = parser.Parse();
 
             res.IsSuccessful.Should().BeTrue();

@@ -1,4 +1,5 @@
 ﻿using Calculator.Common.Parser;
+using Calculator.Common.SyntaxThree;
 
 namespace Calculator.Common.Evaluator
 {

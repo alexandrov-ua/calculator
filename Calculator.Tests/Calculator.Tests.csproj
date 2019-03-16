@@ -64,8 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EvaluatorTests.cs" />
-    <Compile Include="ParserTests.cs" />
+    <Compile Include="SyntaxThreeEvaluatorTests.cs" />
+    <Compile Include="SyntaxTokenParserTests.cs" />
     <Compile Include="SyntaxTokenEnumerableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
