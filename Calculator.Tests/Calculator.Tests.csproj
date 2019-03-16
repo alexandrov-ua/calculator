@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SyntaxThreeEvaluatorTests.cs" />
+    <Compile Include="SyntaxTokenKindExtensionsTests.cs" />
     <Compile Include="SyntaxTokenParserTests.cs" />
     <Compile Include="SyntaxTokenEnumerableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

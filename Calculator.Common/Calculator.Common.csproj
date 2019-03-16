@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,10 +29,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,6 +47,10 @@
   <ItemGroup>
     <Compile Include="Evaluator\SyntaxThreeEvaluator.cs" />
     <Compile Include="Evaluator\SyntaxThreeVisitor.cs" />
+    <Compile Include="SyntaxThree\MinusUnaryNode.cs" />
+    <Compile Include="SyntaxThree\PlusUnaryNode.cs" />
+    <Compile Include="SyntaxThree\UnaryOperatorNode.cs" />
+    <Compile Include="Tools\EnumExtensions.cs" />
     <Compile Include="SyntaxThree\BinaryOperationNode.cs" />
     <Compile Include="Parser\DiagnosticsEntry.cs" />
     <Compile Include="SyntaxThree\DivideBinaryNode.cs" />
@@ -59,6 +68,8 @@
     <Compile Include="Lexer\SyntaxTokenIterator.cs" />
     <Compile Include="Lexer\SyntaxTokenKind.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

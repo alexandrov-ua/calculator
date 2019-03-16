@@ -8,24 +8,40 @@ namespace Calculator.Tests
 {
     public class SyntaxThreeEvaluatorTests
     {
-        [Fact]
-        public void Foo()
+        private static double Evaluate(string input)
         {
-            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2+3*4"));
+            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable(input));
             var parserResult = parser.Parse();
             var evaluator = new SyntaxThreeEvaluator(parserResult.Root);
-            var result = evaluator.Evaluate();
+            return evaluator.Evaluate();
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_BinaryOperators_AccordingToPrecedence()
+        {
+            var result = Evaluate("2+3*4");
             result.Should().Be(14);
         }
 
         [Fact]
-        public void Bar()
+        public void SyntaxThreeEvaluator_ShouldEvaluate_BinaryOperators_AccordingToPrecedence2()
         {
-            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable("2*3+4"));
-            var parserResult = parser.Parse();
-            var evaluator = new SyntaxThreeEvaluator(parserResult.Root);
-            var result = evaluator.Evaluate();
+            var result = Evaluate("2*3+4");
             result.Should().Be(10);
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_UnaryOperators()
+        {
+            var result = Evaluate("2*-4");
+            result.Should().Be(-8);
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_UnaryOperators2()
+        {
+            var result = Evaluate("-2*4");
+            result.Should().Be(-8);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Calculator.Common.Parser;
+﻿using System;
+using Calculator.Common.Parser;
 using Calculator.Common.SyntaxThree;
 
 namespace Calculator.Common.Evaluator
@@ -22,9 +23,19 @@ namespace Calculator.Common.Evaluator
             return node.Left.Accept(this) + node.Right.Accept(this);
         }
 
+        internal double Visit(PlusUnaryNode node)
+        {
+            return node.Operand.Accept(this);
+        }
+
         public double Visit(MinusBinaryNode node)
         {
             return node.Left.Accept(this) - node.Right.Accept(this);
+        }
+
+        internal double Visit(MinusUnaryNode node)
+        {
+            return node.Operand.Accept(this) * -1.0d;
         }
 
         public double Visit(MultiplyBinaryNode node)

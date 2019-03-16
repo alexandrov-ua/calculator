@@ -40,37 +40,30 @@ namespace Calculator.Common.Parser
             return new SyntaxToken(kind, 0, null);
         }
 
-        private SyntaxNode ParseBinaryExpression(int parentPrecedence = 0)
+        private SyntaxNode ParseBinaryExpression(int parentPrecedence = 0, bool afterUnary = false)
         {
-            var left = ParseNumberLiteral();
+            SyntaxNode left;
+            if (_tokens.Current.Kind.IsInTokenGroup(SyntaxTokenGroup.Unary))
+            {
+                var operatorToken = _tokens.GetAndMoveNext();
+                var operand = ParseBinaryExpression(afterUnary:true);
+                left = UnaryOperatorNode.Create(operatorToken, operand);
+            }
+            else
+            {
+                left = ParseNumberLiteral();
+            }
             while (true)
             {
-                var precedence = _tokens.Current.Kind.GetPrecedence();
-                if (precedence == 0 || precedence <= parentPrecedence)
+                var precedence = _tokens.Current.Kind.GetBinaryOperationPrecedence();
+                if (!_tokens.Current.Kind.IsInTokenGroup(SyntaxTokenGroup.Binary) || precedence <= parentPrecedence || afterUnary)
                     break;
                 var op = _tokens.GetAndMoveNext();
                 var right = ParseBinaryExpression(precedence);
-                left = CreateBinaryOperator(left, op, right);
+                left = BinaryOperationNode.Create(left, op, right);
             }
 
             return left;
-        }
-
-        private SyntaxNode CreateBinaryOperator(SyntaxNode left, SyntaxToken op, SyntaxNode right)
-        {
-            switch (op.Kind)
-            {
-                case SyntaxTokenKind.Plus:
-                    return new PlusBinaryNode(left, right);
-                case SyntaxTokenKind.Minus:
-                    return new MinusBinaryNode(left, right);
-                case SyntaxTokenKind.Star:
-                    return new MultiplyBinaryNode(left, right);
-                case SyntaxTokenKind.Slash:
-                    return new DivideBinaryNode(left, right);
-                default:
-                    throw new NotImplementedException();
-            }
         }
 
         private SyntaxNode ParseNumberLiteral()
