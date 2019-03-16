@@ -98,5 +98,22 @@ namespace Calculator.Tests
                 });
         }
 
+        [Fact]
+        public void SyntaxTokenEnumerable_ShouldByAbleToHandle_EmptyString()
+        {
+            new SyntaxTokenEnumerable("")
+                .Select(t => (t.Kind, t.Text, t.StartIndex))
+                .Should()
+                .BeEmpty();
+        }
+
+        [Fact]
+        public void SyntaxTokenEnumerable_ShouldByAbleToHandle_WhiteSpaces()
+        {
+            new SyntaxTokenEnumerable(" \t\n")
+                .Select(t => (t.Kind, t.Text, t.StartIndex))
+                .Should()
+                .BeEmpty();
+        }
     }
 }
