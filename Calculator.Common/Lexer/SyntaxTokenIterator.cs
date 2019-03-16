@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Calculator.Common
+namespace Calculator.Common.Lexer
 {
     public class SyntaxTokenEnumerable : IEnumerable<SyntaxToken>
     {

@@ -1,4 +1,4 @@
-﻿namespace Calculator.Common
+﻿namespace Calculator.Common.Lexer
 {
     public class SyntaxToken
     {

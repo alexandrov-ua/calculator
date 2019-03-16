@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Calculator.Common;
+using Calculator.Common.Lexer;
 using FluentAssertions;
 using Xunit;
 
