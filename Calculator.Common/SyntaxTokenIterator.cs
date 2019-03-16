@@ -75,8 +75,8 @@ namespace Calculator.Common
                         _index += str.Length;
                         return true;
                     }
-                    case var l when Char.IsLetter(l):
-                    {
+                    case var l when Char.IsLetter(l): //match identifiers
+                        {
                         var str = ReadChars(Char.IsLetterOrDigit);
                         Current = new SyntaxToken(SyntaxTokenKind.Identifier, _index, str);
                         _index += str.Length;
