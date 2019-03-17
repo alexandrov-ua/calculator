@@ -18,7 +18,7 @@ namespace Calculator.Repl
 
     public static class EvaluatorFactory
     {
-        private static ILogStorage _logStorage = new FileLogStorage("log.txt");
+        private static readonly ILogStorage _logStorage = new FileLogStorage("log.txt");
 
         public static IStringEvaluator Create()
         {
@@ -72,7 +72,7 @@ namespace Calculator.Repl
 
         public void Log(LogEntry entry)
         {
-            File.AppendAllText(_fileName, JsonConvert.SerializeObject(entry, Formatting.None));
+            File.AppendAllText(_fileName, JsonConvert.SerializeObject(entry, Formatting.None)+Environment.NewLine);
         }
 
         public LogEntry[] GetAll()
