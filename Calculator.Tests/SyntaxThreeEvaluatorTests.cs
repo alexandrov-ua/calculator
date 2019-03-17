@@ -43,5 +43,12 @@ namespace Calculator.Tests
             var result = Evaluate("-2*4");
             result.Should().Be(-8);
         }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_Parenthesis()
+        {
+            var result = Evaluate("(2+3)*4");
+            result.Should().Be(20);
+        }
     }
 }

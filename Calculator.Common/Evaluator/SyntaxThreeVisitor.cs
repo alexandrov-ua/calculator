@@ -18,6 +18,11 @@ namespace Calculator.Common.Evaluator
             return node.Value;
         }
 
+        internal double Visit(ParenthesisNode parenthesisNode)
+        {
+            return parenthesisNode.Expression.Accept(this);
+        }
+
         public double Visit(PlusBinaryNode node)
         {
             return node.Left.Accept(this) + node.Right.Accept(this);

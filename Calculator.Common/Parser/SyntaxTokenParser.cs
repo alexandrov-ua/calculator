@@ -51,7 +51,7 @@ namespace Calculator.Common.Parser
             }
             else
             {
-                left = ParseNumberLiteral();
+                left = ParseParenthesisOrValue();
             }
             while (true)
             {
@@ -64,6 +64,25 @@ namespace Calculator.Common.Parser
             }
 
             return left;
+        }
+
+        private SyntaxNode ParseParenthesisOrValue()
+        {
+            switch (_tokens.Current.Kind)
+            {
+                case SyntaxTokenKind.OpenParenthesis:
+                    return ParseParenthesis();
+                default:
+                    return ParseNumberLiteral();
+            }
+        }
+
+        private SyntaxNode ParseParenthesis()
+        {
+            var left = MatchToken(SyntaxTokenKind.OpenParenthesis);
+            var expression = ParseBinaryExpression();
+            var right = MatchToken(SyntaxTokenKind.CloseParenthesis);
+            return new ParenthesisNode(expression); 
         }
 
         private SyntaxNode ParseNumberLiteral()
