@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SyntaxThreeEvaluatorTests.cs" />
+    <Compile Include="StringEvaluatorTests.cs" />
     <Compile Include="SyntaxTokenKindExtensionsTests.cs" />
     <Compile Include="SyntaxTokenParserNegativeTests.cs" />
     <Compile Include="SyntaxTokenParserTests.cs" />

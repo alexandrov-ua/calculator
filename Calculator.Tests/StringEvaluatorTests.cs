@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Calculator.Tests
 {
-    public class SyntaxThreeEvaluatorTests
+    public class StringEvaluatorTests
     {
         private static double EvaluateSuccess(string input)
         {
