@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Calculator.Common.Lexer;
 using Calculator.Common.SyntaxThree;
@@ -21,12 +22,7 @@ namespace Calculator.Common.Parser
             _tokens.MoveNext();
             var root = ParseBinaryExpression();
             var endOfFile = MatchToken(SyntaxTokenKind.EndOfFile);
-            return new ParserResult()
-            {
-                IsSuccessful = !_diagnostics.Any(),
-                Root = root,
-                Diagnostics = _diagnostics
-            };
+            return new ParserResult(!_diagnostics.Any(), root, _diagnostics.ToArray());
         }
 
         private SyntaxToken MatchToken(SyntaxTokenKind kind)
@@ -91,7 +87,7 @@ namespace Calculator.Common.Parser
         private SyntaxNode ParseNumberLiteral()
         {
             var literal = MatchToken(SyntaxTokenKind.Number);
-            var value = string.IsNullOrEmpty(literal.Text) ? 0.0d : double.Parse(literal.Text);
+            var value = string.IsNullOrEmpty(literal.Text) ? 0.0d : double.Parse(literal.Text, CultureInfo.InvariantCulture);
             return new NumberNode(value);
         }
     }

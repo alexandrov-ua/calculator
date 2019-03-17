@@ -8,47 +8,61 @@ namespace Calculator.Tests
 {
     public class SyntaxThreeEvaluatorTests
     {
-        private static double Evaluate(string input)
+        private static double EvaluateSuccess(string input)
         {
-            var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable(input));
-            var parserResult = parser.Parse();
-            var evaluator = new SyntaxThreeEvaluator(parserResult.Root);
-            return evaluator.Evaluate();
+            var evaluator = new StringEvaluator();
+            var result =  evaluator.Evaluate(input);
+            result.IsSuccessful.Should().BeTrue();
+            return result.Result;
         }
 
         [Fact]
         public void SyntaxThreeEvaluator_ShouldEvaluate_BinaryOperators_AccordingToPrecedence()
         {
-            var result = Evaluate("2+3*4");
+            var result = EvaluateSuccess("2+3*4");
             result.Should().Be(14);
         }
 
         [Fact]
         public void SyntaxThreeEvaluator_ShouldEvaluate_BinaryOperators_AccordingToPrecedence2()
         {
-            var result = Evaluate("2*3+4");
+            var result = EvaluateSuccess("2*3+4");
             result.Should().Be(10);
         }
 
         [Fact]
         public void SyntaxThreeEvaluator_ShouldEvaluate_UnaryOperators()
         {
-            var result = Evaluate("2*-4");
+            var result = EvaluateSuccess("2*-4");
             result.Should().Be(-8);
         }
 
         [Fact]
         public void SyntaxThreeEvaluator_ShouldEvaluate_UnaryOperators2()
         {
-            var result = Evaluate("-2*4");
+            var result = EvaluateSuccess("-2*4");
             result.Should().Be(-8);
         }
 
         [Fact]
         public void SyntaxThreeEvaluator_ShouldEvaluate_Parenthesis()
         {
-            var result = Evaluate("(2+3)*4");
+            var result = EvaluateSuccess("(2+3)*4");
             result.Should().Be(20);
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_AndReturnDoubleResult()
+        {
+            var result = EvaluateSuccess("3/2");
+            result.Should().Be(1.5);
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_Doubles()
+        {
+            var result = EvaluateSuccess("3.2/2.0");
+            result.Should().Be(1.6);
         }
     }
 }

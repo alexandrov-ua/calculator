@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Calculator.Common.Parser;
 using Calculator.Common.SyntaxThree;
 
@@ -6,12 +7,9 @@ namespace Calculator.Common.Evaluator
 {
     internal class SyntaxThreeVisitor
     {
-        private readonly SyntaxNode _root;
+        private readonly List<DiagnosticsEntry> _diagnostics = new List<DiagnosticsEntry>();
 
-        public SyntaxThreeVisitor(SyntaxNode root)
-        {
-            _root = root;
-        }
+        public IReadOnlyCollection<DiagnosticsEntry> Diagnostics => _diagnostics;
 
         public double Visit(NumberNode node)
         {

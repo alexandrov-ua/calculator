@@ -5,8 +5,15 @@ namespace Calculator.Common.Parser
 {
     public class ParserResult
     {
-        public bool IsSuccessful { get; set; }
-        public SyntaxNode Root { get; set; }
-        public List<DiagnosticsEntry> Diagnostics { get; set; }
+        public ParserResult(bool isSuccessful, SyntaxNode root, DiagnosticsEntry[] diagnostics)
+        {
+            IsSuccessful = isSuccessful;
+            Root = root;
+            Diagnostics = diagnostics;
+        }
+
+        public bool IsSuccessful { get; }
+        public SyntaxNode Root { get; }
+        public DiagnosticsEntry[] Diagnostics { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Calculator.Tests
 {
     public class SyntaxTokenParserNegativeTests
     {
-        private static List<DiagnosticsEntry> ParseFailed(string input)
+        private static DiagnosticsEntry[] ParseFailed(string input)
         {
             var parser = new SyntaxTokenParser(new SyntaxTokenEnumerable(input));
             var parserResult = parser.Parse();
@@ -46,6 +46,16 @@ namespace Calculator.Tests
             error.Expected.Should().Be(SyntaxTokenKind.EndOfFile);
             error.Found.Should().Be(SyntaxTokenKind.Number);
             error.Index.Should().Be(2);
+        }
+
+        [Fact]
+        public void Parser_ShouldReturnAnError_WhenIdentifierInsteadOfOperator()
+        {
+            var error = ParseFailed("2a3").First();
+
+            error.Expected.Should().Be(SyntaxTokenKind.EndOfFile);
+            error.Found.Should().Be(SyntaxTokenKind.Identifier);
+            error.Index.Should().Be(1);
         }
     }
 }
