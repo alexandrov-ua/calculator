@@ -33,8 +33,6 @@ namespace Calculator.Common.Parser
                 _tokens.MoveNext();
                 return current;
             }
-
-            //_diagnostics.Add(new DiagnosticsEntry(_tokens.Current.StartIndex, _tokens.Current.Text, kind, _tokens.Current.Kind));
             _diagnostics.ReportError(DiagnosticKind.UnexpectedToken, _tokens.Current.StartIndex, _tokens.Current.Text.Length, kind, _tokens.Current.Kind);
             _tokens.MoveNext();
             return new SyntaxToken(kind, 0, null);
