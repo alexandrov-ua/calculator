@@ -24,7 +24,8 @@ namespace Calculator.Common.Lexer
         CloseParenthesis,
         Number,
         Identifier,
-        Unknown
+        Unknown,
+        EndOfFile
     }
 
     public enum SyntaxTokenGroup

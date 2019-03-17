@@ -19,10 +19,12 @@ namespace Calculator.Common.Parser
         public ParserResult Parse()
         {
             _tokens.MoveNext();
+            var root = ParseBinaryExpression();
+            var endOfFile = MatchToken(SyntaxTokenKind.EndOfFile);
             return new ParserResult()
             {
                 IsSuccessful = !_diagnostics.Any(),
-                Root = ParseBinaryExpression(),
+                Root = root,
                 Diagnostics = _diagnostics
             };
         }
@@ -37,6 +39,7 @@ namespace Calculator.Common.Parser
             }
 
             _diagnostics.Add(new DiagnosticsEntry(_tokens.Current.StartIndex, _tokens.Current.Text, kind, _tokens.Current.Kind));
+            _tokens.MoveNext();
             return new SyntaxToken(kind, 0, null);
         }
 

@@ -21,6 +21,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.Minus, "-", 3),
                     (SyntaxTokenKind.Slash, "/", 4),
                     (SyntaxTokenKind.Star, "*", 6),
+                    (SyntaxTokenKind.EndOfFile, "", 7),
                 });
         }
 
@@ -35,6 +36,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.OpenParenthesis, "(", 0),
                     (SyntaxTokenKind.CloseParenthesis, ")", 2),
                     (SyntaxTokenKind.OpenParenthesis, "(", 4),
+                    (SyntaxTokenKind.EndOfFile, "", 5),
                 });
         }
 
@@ -51,6 +53,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.Number, "3.0", 3),
                     (SyntaxTokenKind.Minus, "-", 6),
                     (SyntaxTokenKind.Number, "7.", 7),
+                    (SyntaxTokenKind.EndOfFile, "", 9),
                 });
         }
 
@@ -66,6 +69,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.OpenParenthesis, "(", 3),
                     (SyntaxTokenKind.Number, "0.5", 4),
                     (SyntaxTokenKind.CloseParenthesis, ")", 7),
+                    (SyntaxTokenKind.EndOfFile, "", 8),
                 });
         }
 
@@ -81,6 +85,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.OpenParenthesis, "(", 5),
                     (SyntaxTokenKind.Number, "0.5", 6),
                     (SyntaxTokenKind.CloseParenthesis, ")", 9),
+                    (SyntaxTokenKind.EndOfFile, "", 10),
                 });
         }
 
@@ -96,6 +101,7 @@ namespace Calculator.Tests
                     (SyntaxTokenKind.Number, "2", 1),
                     (SyntaxTokenKind.Identifier, "qwe", 2),
                     (SyntaxTokenKind.Unknown, "#", 5),
+                    (SyntaxTokenKind.EndOfFile, "", 6),
                 });
         }
 
@@ -105,7 +111,10 @@ namespace Calculator.Tests
             new SyntaxTokenEnumerable("")
                 .Select(t => (t.Kind, t.Text, t.StartIndex))
                 .Should()
-                .BeEmpty();
+                .BeEquivalentTo(new []
+                {
+                    (SyntaxTokenKind.EndOfFile, "", 0),
+                });
         }
 
         [Fact]
@@ -114,7 +123,10 @@ namespace Calculator.Tests
             new SyntaxTokenEnumerable(" \t\n")
                 .Select(t => (t.Kind, t.Text, t.StartIndex))
                 .Should()
-                .BeEmpty();
+                .BeEquivalentTo(new[]
+                {
+                    (SyntaxTokenKind.EndOfFile, "", 3),
+                });
         }
     }
 }

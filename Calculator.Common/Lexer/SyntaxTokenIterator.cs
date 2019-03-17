@@ -29,6 +29,7 @@ namespace Calculator.Common.Lexer
     {
         private readonly string _input;
         private int _index;
+        private bool _endOfFile = false;
         object IEnumerator.Current => Current;
         public SyntaxToken Current { get; private set; }
 
@@ -90,6 +91,13 @@ namespace Calculator.Common.Lexer
                         return true;
                 }
             }
+
+            if (!_endOfFile)
+            {
+                Current = new SyntaxToken(SyntaxTokenKind.EndOfFile, _index, String.Empty);
+                _endOfFile = true;
+                return true;
+            }
             return false;
         }
 
@@ -107,6 +115,7 @@ namespace Calculator.Common.Lexer
         public void Reset()
         {
             _index = 0;
+            _endOfFile = false;
         }
 
         public void Dispose()
