@@ -7,7 +7,7 @@ using Calculator.Common.SyntaxThree;
 
 namespace Calculator.Common.Evaluator
 {
-    public class StringEvaluator
+    public class StringEvaluator : IStringEvaluator
     {
         public EvaluatorResult Evaluate(string input)
         {
@@ -25,20 +25,6 @@ namespace Calculator.Common.Evaluator
             }
 
             return new EvaluatorResult(true, result, parserResult.Diagnostics.Concat(syntaxThreeVisitor.Diagnostics).ToArray());
-        }
-    }
-
-    public class EvaluatorResult
-    {
-        public bool IsSuccessful { get; }
-        public double Result { get; }
-        public DiagnosticsEntry[] Diagnostics { get; }
-
-        public EvaluatorResult(bool isSuccessful, double result, DiagnosticsEntry[] diagnostics)
-        {
-            IsSuccessful = isSuccessful;
-            Result = result;
-            Diagnostics = diagnostics;
         }
     }
 }

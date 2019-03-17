@@ -48,7 +48,9 @@ namespace Calculator.Common.Evaluator
 
         public double Visit(DivideBinaryNode node)
         {
-            return node.Left.Accept(this) / node.Right.Accept(this);
+            var left = node.Left.Accept(this);
+            var right = node.Right.Accept(this);
+            return left / right;
         }
     }
 }

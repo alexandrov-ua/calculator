@@ -11,7 +11,7 @@ namespace Calculator.Common.Parser
     public class SyntaxTokenParser
     {
         private readonly IEnumerator<SyntaxToken> _tokens;
-        private readonly List<DiagnosticsEntry> _diagnostics = new List<DiagnosticsEntry>();
+        private readonly DiagnosticsBag _diagnostics = new DiagnosticsBag();
         public SyntaxTokenParser(IEnumerable<SyntaxToken> tokens)
         {
             _tokens = tokens.GetEnumerator();
@@ -34,7 +34,8 @@ namespace Calculator.Common.Parser
                 return current;
             }
 
-            _diagnostics.Add(new DiagnosticsEntry(_tokens.Current.StartIndex, _tokens.Current.Text, kind, _tokens.Current.Kind));
+            //_diagnostics.Add(new DiagnosticsEntry(_tokens.Current.StartIndex, _tokens.Current.Text, kind, _tokens.Current.Kind));
+            _diagnostics.ReportError(DiagnosticKind.UnexpectedToken, _tokens.Current.StartIndex, _tokens.Current.Text.Length, kind, _tokens.Current.Kind);
             _tokens.MoveNext();
             return new SyntaxToken(kind, 0, null);
         }

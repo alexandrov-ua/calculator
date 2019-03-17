@@ -10,6 +10,8 @@ namespace Calculator.Repl
     {
         static void Main(string[] args)
         {
+            ReplAppFactory.Create()
+                .StartMainLoop();
         }
     }
 }

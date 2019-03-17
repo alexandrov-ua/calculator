@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evaluator\EvaluatorResult.cs" />
+    <Compile Include="Evaluator\IStringEvaluator.cs" />
     <Compile Include="Evaluator\StringEvaluator.cs" />
     <Compile Include="Evaluator\SyntaxThreeVisitor.cs" />
     <Compile Include="SyntaxThree\MinusUnaryNode.cs" />

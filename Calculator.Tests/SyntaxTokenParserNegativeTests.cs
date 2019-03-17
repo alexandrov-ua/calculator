@@ -23,9 +23,9 @@ namespace Calculator.Tests
         {
             var error = ParseFailed("(2+3").First();
 
-            error.Expected.Should().Be(SyntaxTokenKind.CloseParenthesis);
-            error.Index.Should().Be(4);
-            error.Found.Should().Be(SyntaxTokenKind.EndOfFile);
+            error.Parameters[0].Should().Be(SyntaxTokenKind.CloseParenthesis);
+            error.Parameters[1].Should().Be(SyntaxTokenKind.EndOfFile);
+            error.Span.Start.Should().Be(4);
         }
 
         [Fact]
@@ -33,9 +33,9 @@ namespace Calculator.Tests
         {
             var error = ParseFailed(")2+3(").First();
 
-            error.Expected.Should().Be(SyntaxTokenKind.Number);
-            error.Index.Should().Be(0);
-            error.Found.Should().Be(SyntaxTokenKind.CloseParenthesis);
+            error.Parameters[0].Should().Be(SyntaxTokenKind.Number);
+            error.Parameters[1].Should().Be(SyntaxTokenKind.CloseParenthesis);
+            error.Span.Start.Should().Be(0);
         }
 
         [Fact]
@@ -43,9 +43,9 @@ namespace Calculator.Tests
         {
             var error = ParseFailed("2 3").First();
 
-            error.Expected.Should().Be(SyntaxTokenKind.EndOfFile);
-            error.Found.Should().Be(SyntaxTokenKind.Number);
-            error.Index.Should().Be(2);
+            error.Parameters[0].Should().Be(SyntaxTokenKind.EndOfFile);
+            error.Parameters[1].Should().Be(SyntaxTokenKind.Number);
+            error.Span.Start.Should().Be(2);
         }
 
         [Fact]
@@ -53,9 +53,9 @@ namespace Calculator.Tests
         {
             var error = ParseFailed("2a3").First();
 
-            error.Expected.Should().Be(SyntaxTokenKind.EndOfFile);
-            error.Found.Should().Be(SyntaxTokenKind.Identifier);
-            error.Index.Should().Be(1);
+            error.Parameters[0].Should().Be(SyntaxTokenKind.EndOfFile);
+            error.Parameters[1].Should().Be(SyntaxTokenKind.Identifier);
+            error.Span.Start.Should().Be(1);
         }
     }
 }
