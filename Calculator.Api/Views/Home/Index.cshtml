@@ -1,18 +1,23 @@
 ﻿@section body{
-    <div>
-        <div>
-            <table id="container" style="overflow-y: auto; display: block; max-height: 90vh; ">
-                @*<thead><tr>
-                        <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
-                    </tr></thead>*@
-                <tbody data-bind="foreach: items">
+<div>
+    <div id="container" style="overflow-y: auto; display: block; max-height: 90vh; ">
+        <table>
+            @*<thead><tr>
+                    <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
+                </tr></thead>*@
+            <tbody data-bind="foreach: items">
                 <tr>
                     <td data-bind="text: val"></td>
                 </tr>
-                </tbody>
-            </table>
-            <p>Input: <input data-bind="value: input, event:{keypress: keypressed}" /><button data-bind="click: calculate">Calculate</button></p>
-        </div>
+            </tbody>
+        </table>
+        <div id="scrollTo"></div>
     </div>
+    <p>
+        ><input id="input" type="text" data-bind="value: input, valueUpdate: 'afterkeydown', enterkey: onEnterKey" />
+    </p>
+    @*<p>Input: <input id="input" type="text" data-bind="value: input, valueUpdate: 'afterkeydown', enterkey: onEnterKey" /><button data-bind="click: calculate">Calculate</button></p>*@
+    @*//data-bind="value:sendMessageText, valueUpdate: 'afterkeydown', enterkey: sendMessage"*@
+</div>
     @*<p>Output: <strong data-bind="text: output"></strong></p>*@
 }
