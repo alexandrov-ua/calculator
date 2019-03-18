@@ -9,14 +9,13 @@ namespace Calculator.IntegrationTests.Fixtures
 {
     public class ControllerFixture : IDisposable
     {
-        public HttpClient Client { get; private set; }
+        public HttpClient Client { get; }
 
-        public HttpServer Server { get; private set; }
+        private HttpServer Server { get; }
 
         public ControllerFixture()
         {
             var config = new HttpConfiguration();
-            //config.MapHttpAttributeRoutes();
             WebApiConfig.Register(config);
             Server = new HttpServer(config);
             Client = CreateClient(Server);
