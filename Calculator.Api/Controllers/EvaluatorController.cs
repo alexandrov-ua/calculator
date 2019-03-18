@@ -1,25 +1,34 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Net;
+using System.Web.Http;
+using Calculator.Api.ViewModels;
+using Calculator.Common.Evaluator;
 
 namespace Calculator.Api.Controllers
 {
     [RoutePrefix("api/evaluator")]
     public class EvaluatorController : ApiController
     {
-        [Route("evaluate")]
-        [HttpPost]
-        public object Evaluate([FromBody]InputModel input)
+        private readonly IStringEvaluator _evaluator;
+
+        public EvaluatorController() : this(StringEvaluatorFactory.Create())
         {
-            return new
-            {
-                IsSuccessful = true,
-                Result = 12.0,
-                Diagnostics = new int[0],
-            };
+            
         }
 
-        public class InputModel
+        public EvaluatorController(IStringEvaluator evaluator)
         {
-            public string Expression { get; set; }
+            _evaluator = evaluator;
+        }
+
+        [Route("evaluate")]
+        [HttpPost]
+        public EvaluatorOutputViewModel Evaluate([FromBody]EvaluatorInputViewModel evaluatorInputView)
+        {
+            if(evaluatorInputView==null)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            return EvaluatorOutputViewModel.FromModel(_evaluator.Evaluate(evaluatorInputView.Expression));
         }
     }
 }
