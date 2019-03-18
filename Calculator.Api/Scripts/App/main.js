@@ -1,4 +1,5 @@
 ﻿window.onload = function () {
+    
     $.ajaxSetup({
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Accept", "application/json");
@@ -26,6 +27,9 @@
                 });
 
             this.output();
+            var rowpos = $('#container tr:last').position();
+            console.log(rowpos.top);
+            $('#container').scrollTop(rowpos.top);
         };
 
         this.keypressed = function (data, event) {
