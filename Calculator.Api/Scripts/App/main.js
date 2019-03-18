@@ -1,64 +1,101 @@
 ﻿window.onload = function () {
-    ko.extenders.scrollFollow = function (target, selector) {
-        target.subscribe(function (newval) {
-            var el = document.querySelector(selector);
-
-            if (el.scrollTop == el.scrollHeight - el.clientHeight) {
-                setTimeout(function () { el.scrollTop = el.scrollHeight - el.clientHeight; }, 0);
-            }
-        });
-
-        return target;
-    };
-
-    ko.bindingHandlers.enterkey = {
-        init: function (element, valueAccessor, allBindings, viewModel) {
-            var callback = valueAccessor();
-            $(element).keypress(function (event) {
-                var keyCode = (event.which ? event.which : event.keyCode);
-                if (keyCode === 13) {
-                    callback.call(viewModel);
-                    return false;
-                }
-                return true;
-            });
+    function processResponse(response) {
+        if (response.isSuccessful) {
+            return response.result;
         }
-    };
-
-    $.ajaxSetup({
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Accept", "application/json");
-            xhr.setRequestHeader("Content-Type", "application/json");
-        }
-    });
-
-    function Item(text) {
-        self.val = text;
+        var error = response.diagnostics[0];
+        return makeArrow(error.span) + " " + getErrorMessage(error.kind, error.parameters);
     }
 
+    function getErrorMessage(kind, params) {
+        switch (kind) {
+            case "UnexpectedToken":
+                return "Expected: " + params[0] + ". But found: " + params[1];
+            default:
+                return "Error: " + kind;
+        }
+    }
+
+    function makeArrow(span) {
+        var res = "";
+        for (var i = 0; i < span.start + 1; i++) {
+            res = res + "-";
+        }
+        for (var j = 0; j < span.length; j++) {
+            res = res + "^";
+        }
+        return res;
+    }
+
+    function showHelp(items) {
+        items.push("");
+        items.push("");
+        items.push("");
+    }
+
+    //function processInput(self, input) {
+    //    self.items.push(new Item(">" + this.input()));
+    //    switch (input.trim()) {
+    //        case "#help":
+    //            showHelp(self.items);
+    //            break;
+    //        case "#cls":
+    //            self.items.clear();
+    //            break;
+    //        default:
+    //            {
+    //                var item = new Item("...");
+    //                self.items.push(item);
+    //                this.client.calculate(this.input(),
+    //                    function (response) {
+    //                        item.val(processResponse(response));
+    //                        if (!response.isSuccessful) {
+    //                            item.isError(true);
+
+    //                        }
+    //                    });
+
+    //            }
+    //    }
+    //    this.input("");
+    //}
+
+    function Item(text) {
+        this.val = ko.observable(text);
+        this.isError = ko.observable(false);
+    }
 
     function AppViewModel() {
-        this.input = ko.observable("asd");
-        this.output = ko.observable("");
+        this.input = ko.observable("");
         this.items = ko.observableArray([]).extend({ scrollFollow: '#container' });
+        this.client = new ApiClient();
         this.calculate = function () {
             var self = this;
             this.items.push(new Item(">" + this.input()));
-            $.post("api/evaluator/evaluate",
-                JSON.stringify({ expression: this.input() }),
+            var item = new Item("...");
+            self.items.push(item);
+            this.client.calculate(this.input(),
                 function (response) {
-                    self.output(response.result);
-                    self.items.push(new Item(response.result));
-                });
+                    item.val(processResponse(response));
+                    if (!response.isSuccessful) {
+                        item.isError(true);
 
-            this.output();
+                    }
+                });
+            this.input("");
+            //processInput(self, self.input());
         };
 
         this.onEnterKey = function () {
             this.calculate();
-        }
+        };
     }
+
     ko.applyBindings(new AppViewModel());
+
+    $(window).focus(function () {
+        $("#input").focus();
+    });
     $("#input").focus();
-}
+};
 

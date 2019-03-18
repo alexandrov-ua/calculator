@@ -69,7 +69,5 @@ namespace Calculator.Common.Parser
         public int Start { get; }
         public int Length { get; }
         public int End => Start + Length;
-
-        public override string ToString() => $"{Start}..{End}";
     }
 }
