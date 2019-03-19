@@ -34,6 +34,8 @@
         items.push(new Item("REPL commands:"));
         items.push(new Item("#help - to show help"));
         items.push(new Item("#cls - clear screen"));
+        items.push(new Item("#show-log - show log"));
+        items.push(new Item("#download-log - to download log of all operations"));
     }
 
     function calculate(self, input) {
@@ -49,6 +51,21 @@
             });
     }
 
+    function showLog(self) {
+        self.items([]);
+        self.client.getLog(function(response) {
+            for (var i = 0; i < response.length; i++) {
+                var log = response[i];
+                self.items.push(new Item(">" + log.input));
+                var item = new Item(processResponse(log.output));
+                if (!log.output.isSuccessful) {
+                    item.isError(true);
+                }
+                self.items.push(item);
+            }
+        });
+    }
+
     function processInput(self, input) {
         self.items.push(new Item(">" + input));
         switch (input.trim()) {
@@ -57,6 +74,12 @@
                 break;
             case "#cls":
                 self.items([]);
+                break;
+            case "#show-log":
+                showLog(self);
+                break;
+            case "#download-log":
+                self.client.downloadLog();
                 break;
             default:
                 calculate(self, input);

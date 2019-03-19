@@ -1,4 +1,5 @@
 ﻿using Calculator.Common.Evaluator;
+using Calculator.Dal;
 
 namespace Calculator.Api
 {
@@ -6,7 +7,7 @@ namespace Calculator.Api
     {
         public static IStringEvaluator Create()
         {
-            return new StringEvaluator();
+            return  new LoggingStringEvaluatorDecorator(new StringEvaluator(), LogSorageFactory.Create());
         }
     }
 }

@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Calculator.IntegrationTests</RootNamespace>
     <AssemblyName>Calculator.IntegrationTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -22,6 +22,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,8 +83,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
@@ -93,9 +98,13 @@
       <Project>{137674f8-c514-42a0-a074-4822ad175096}</Project>
       <Name>Calculator.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Calculator.Repl\Calculator.Repl.csproj">
-      <Project>{cb171888-f981-49fb-8660-3f9136d98bc5}</Project>
-      <Name>Calculator.Repl</Name>
+    <ProjectReference Include="..\Calculator.Common\Calculator.Common.csproj">
+      <Project>{58217163-62eb-4b5f-a8cf-90041197eca9}</Project>
+      <Name>Calculator.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calculator.Dal\Calculator.Dal.csproj">
+      <Project>{7304f0bd-b70a-4088-8448-fd2424b641f1}</Project>
+      <Name>Calculator.Dal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

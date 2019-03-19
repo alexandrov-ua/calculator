@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CB171888-F981-49FB-8660-3F9136D98BC5}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Calculator.Repl</RootNamespace>
-    <AssemblyName>Calculator.Repl</AssemblyName>
+    <ProjectGuid>{7304F0BD-B70A-4088-8448-FD2424B641F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Calculator.Dal</RootNamespace>
+    <AssemblyName>Calculator.Dal</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +24,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -45,25 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EvaluatorFactory.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="EvaluatorLog.cs" />
+    <Compile Include="FileLogStorage.cs" />
+    <Compile Include="ILogStorage.cs" />
+    <Compile Include="InMemoryLogStorage.cs" />
+    <Compile Include="LogEntry.cs" />
+    <Compile Include="LoggingStringEvaluatorDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReplApp.cs" />
-    <Compile Include="ReplAppFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calculator.Common\Calculator.Common.csproj">
       <Project>{58217163-62eb-4b5f-a8cf-90041197eca9}</Project>
       <Name>Calculator.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Calculator.Dal\Calculator.Dal.csproj">
-      <Project>{7304f0bd-b70a-4088-8448-fd2424b641f1}</Project>
-      <Name>Calculator.Dal</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
