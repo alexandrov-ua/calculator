@@ -20,6 +20,9 @@ namespace Calculator.Common.Lexer
         [BinaryOperationPrecedence(2)]
         [SyntaxTokenGroup(SyntaxTokenGroup.Binary)]
         Slash,
+        [BinaryOperationPrecedence(3)]
+        [SyntaxTokenGroup(SyntaxTokenGroup.Binary)]
+        Hat,
         OpenParenthesis,
         CloseParenthesis,
         Number,

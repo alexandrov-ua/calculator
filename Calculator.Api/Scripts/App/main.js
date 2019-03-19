@@ -30,7 +30,7 @@
     function showHelp(items) {
         items.push(new Item("Simple math expressions evaluator."));
         items.push(new Item("Input example: 2+3*4"));
-        items.push(new Item("Supported operations: Binary: +-*/ Unary: +- Parenthesis: ()"));
+        items.push(new Item("Supported operations: Binary: +-*/^ Unary: +- Parenthesis: ()"));
         items.push(new Item("REPL commands:"));
         items.push(new Item("#help - to show help"));
         items.push(new Item("#cls - clear screen"));

@@ -11,6 +11,11 @@ namespace Calculator.Common.Evaluator
 
         public IReadOnlyCollection<DiagnosticsEntry> Diagnostics => _diagnostics;
 
+        internal double Visit(PowerBinaryNode node)
+        {
+            return Math.Pow(node.Left.Accept(this), node.Right.Accept(this));
+        }
+
         public double Visit(NumberNode node)
         {
             return node.Value;

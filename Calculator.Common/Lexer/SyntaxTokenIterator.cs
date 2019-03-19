@@ -61,6 +61,10 @@ namespace Calculator.Common.Lexer
                         Current = new SyntaxToken(SyntaxTokenKind.Star, _index, _input.Substring(_index, 1));
                         _index++;
                         return true;
+                    case '^':
+                        Current = new SyntaxToken(SyntaxTokenKind.Hat, _index, _input.Substring(_index, 1));
+                        _index++;
+                        return true;
                     case '(':
                         Current = new SyntaxToken(SyntaxTokenKind.OpenParenthesis, _index, _input.Substring(_index, 1));
                         _index++;

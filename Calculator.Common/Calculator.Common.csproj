@@ -52,6 +52,7 @@
     <Compile Include="SyntaxThree\MinusUnaryNode.cs" />
     <Compile Include="SyntaxThree\ParenthesisNode.cs" />
     <Compile Include="SyntaxThree\PlusUnaryNode.cs" />
+    <Compile Include="SyntaxThree\PowerBinaryNode.cs" />
     <Compile Include="SyntaxThree\UnaryOperatorNode.cs" />
     <Compile Include="Tools\EnumExtensions.cs" />
     <Compile Include="SyntaxThree\BinaryOperationNode.cs" />

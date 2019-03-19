@@ -64,5 +64,19 @@ namespace Calculator.Tests
             var result = EvaluateSuccess("3.2/2.0");
             result.Should().Be(1.6);
         }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_Power()
+        {
+            var result = EvaluateSuccess("2*3^4");
+            result.Should().Be(162);
+        }
+
+        [Fact]
+        public void SyntaxThreeEvaluator_ShouldEvaluate_Power2()
+        {
+            var result = EvaluateSuccess("1+2^3*4+5");
+            result.Should().Be(38);
+        }
     }
 }

@@ -38,23 +38,13 @@ namespace Calculator.Common.Parser
             return new SyntaxToken(kind, 0, null);
         }
 
-        private SyntaxNode ParseBinaryExpression(int parentPrecedence = 0, bool afterUnary = false)
+        private SyntaxNode ParseBinaryExpression(int parentPrecedence = 0)
         {
-            SyntaxNode left;
-            if (_tokens.Current.Kind.IsInTokenGroup(SyntaxTokenGroup.Unary))
-            {
-                var operatorToken = _tokens.GetAndMoveNext();
-                var operand = ParseBinaryExpression(afterUnary:true);
-                left = UnaryOperatorNode.Create(operatorToken, operand);
-            }
-            else
-            {
-                left = ParseParenthesisOrValue();
-            }
+            SyntaxNode left = ParseUnaryOrParenthesisOrValue();
             while (true)
             {
                 var precedence = _tokens.Current.Kind.GetBinaryOperationPrecedence();
-                if (!_tokens.Current.Kind.IsInTokenGroup(SyntaxTokenGroup.Binary) || precedence <= parentPrecedence || afterUnary)
+                if (!_tokens.Current.Kind.IsInTokenGroup(SyntaxTokenGroup.Binary) || precedence <= parentPrecedence)
                     break;
                 var op = _tokens.GetAndMoveNext();
                 var right = ParseBinaryExpression(precedence);
@@ -64,10 +54,12 @@ namespace Calculator.Common.Parser
             return left;
         }
 
-        private SyntaxNode ParseParenthesisOrValue()
+        private SyntaxNode ParseUnaryOrParenthesisOrValue()
         {
             switch (_tokens.Current.Kind)
             {
+                case var k when k.IsInTokenGroup(SyntaxTokenGroup.Unary):
+                    return ParseUnaryExpression();
                 case SyntaxTokenKind.OpenParenthesis:
                     return ParseParenthesis();
                 default:
@@ -75,12 +67,19 @@ namespace Calculator.Common.Parser
             }
         }
 
+        private SyntaxNode ParseUnaryExpression()
+        {
+            var operatorToken = _tokens.GetAndMoveNext();
+            var operand = ParseUnaryOrParenthesisOrValue();
+            return UnaryOperatorNode.Create(operatorToken, operand);
+        }
+
         private SyntaxNode ParseParenthesis()
         {
             var left = MatchToken(SyntaxTokenKind.OpenParenthesis);
             var expression = ParseBinaryExpression();
             var right = MatchToken(SyntaxTokenKind.CloseParenthesis);
-            return new ParenthesisNode(expression); 
+            return new ParenthesisNode(expression);
         }
 
         private SyntaxNode ParseNumberLiteral()

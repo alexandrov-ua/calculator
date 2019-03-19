@@ -26,6 +26,8 @@ namespace Calculator.Common.SyntaxThree
                     return new MultiplyBinaryNode(left, right);
                 case SyntaxTokenKind.Slash:
                     return new DivideBinaryNode(left, right);
+                case SyntaxTokenKind.Hat:
+                    return new PowerBinaryNode(left, right);
                 default:
                     throw new NotImplementedException();
             }

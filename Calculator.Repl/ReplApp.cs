@@ -110,7 +110,7 @@ namespace Calculator.Repl
         {
             Console.WriteLine("Simple math expressions evaluator.");
             Console.WriteLine("Input example: 2+3*4");
-            Console.WriteLine("Supported operations: Binary: +-*/ Unary: +- Braces: ()");
+            Console.WriteLine("Supported operations: Binary: +-*/^ Unary: +- Braces: ()");
             Console.WriteLine("REPL commands: ");
             Console.WriteLine("#help - to show help");
             Console.WriteLine("#cls - clear screen");
