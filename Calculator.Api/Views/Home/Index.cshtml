@@ -10,7 +10,7 @@
             </table>
         </div>
         <p>
-            ><input id="input" type="text" data-bind="value: input, valueUpdate: 'afterkeydown', enterkey: onEnterKey" style="width: 90vw" />
+            ><input id="input" type="text" onblur="this.focus()" data-bind="value: input, valueUpdate: 'afterkeydown', enterkey: onEnterKey" style="width: 90vw" />
         </p>
     </div>
 }

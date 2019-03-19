@@ -28,37 +28,42 @@
     }
 
     function showHelp(items) {
-        items.push("");
-        items.push("");
-        items.push("");
+        items.push(new Item("Simple math expressions evaluator."));
+        items.push(new Item("Input example: 2+3*4"));
+        items.push(new Item("Supported operations: Binary: +-*/ Unary: +- Parenthesis: ()"));
+        items.push(new Item("REPL commands:"));
+        items.push(new Item("#help - to show help"));
+        items.push(new Item("#cls - clear screen"));
     }
 
-    //function processInput(self, input) {
-    //    self.items.push(new Item(">" + this.input()));
-    //    switch (input.trim()) {
-    //        case "#help":
-    //            showHelp(self.items);
-    //            break;
-    //        case "#cls":
-    //            self.items.clear();
-    //            break;
-    //        default:
-    //            {
-    //                var item = new Item("...");
-    //                self.items.push(item);
-    //                this.client.calculate(this.input(),
-    //                    function (response) {
-    //                        item.val(processResponse(response));
-    //                        if (!response.isSuccessful) {
-    //                            item.isError(true);
+    function calculate(self, input) {
+        var item = new Item("...");
+        self.items.push(item);
+        self.client.calculate(input,
+            function (response) {
+                item.val(processResponse(response));
+                if (!response.isSuccessful) {
+                    item.isError(true);
 
-    //                        }
-    //                    });
+                }
+            });
+    }
 
-    //            }
-    //    }
-    //    this.input("");
-    //}
+    function processInput(self, input) {
+        self.items.push(new Item(">" + input));
+        switch (input.trim()) {
+            case "#help":
+                showHelp(self.items);
+                break;
+            case "#cls":
+                self.items([]);
+                break;
+            default:
+                calculate(self, input);
+                break;
+        }
+        self.input("");
+    }
 
     function Item(text) {
         this.val = ko.observable(text);
@@ -67,23 +72,11 @@
 
     function AppViewModel() {
         this.input = ko.observable("");
-        this.items = ko.observableArray([]).extend({ scrollFollow: '#container' });
+        this.items = ko.observableArray([new Item("Simple math expressions evaluator. For help type: #help")]).extend({ scrollFollow: '#container' });
         this.client = new ApiClient();
         this.calculate = function () {
             var self = this;
-            this.items.push(new Item(">" + this.input()));
-            var item = new Item("...");
-            self.items.push(item);
-            this.client.calculate(this.input(),
-                function (response) {
-                    item.val(processResponse(response));
-                    if (!response.isSuccessful) {
-                        item.isError(true);
-
-                    }
-                });
-            this.input("");
-            //processInput(self, self.input());
+            processInput(self, self.input());
         };
 
         this.onEnterKey = function () {
