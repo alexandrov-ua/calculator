@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>calculator-repl</title>
+    <style>
+        body {
+            font-family: monospace;
+            color: chartreuse;
+            background: black;
+            caret-color: chartreuse;
+        }
+
+        input[type="text"] {
+            background: transparent;
+            border: none;
+            color: chartreuse;
+            font-family: monospace;
+            outline: none;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="container" style="overflow-y: auto; display: block; max-height: 90vh;">
+            <table id="table">
+                <tbody data-bind="foreach: items">
+                    <tr>
+                        <td data-bind="text: val, style: {'color': isError() == true ? 'red' : 'chartreuse'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            ><input id="input" type="text" onblur="this.focus()"
+                data-bind="value: input, valueUpdate: 'afterkeydown', enterkey: onEnterKey" style="width: 90vw" />
+        </p>
+    </div>
+</body>
+
+</html>

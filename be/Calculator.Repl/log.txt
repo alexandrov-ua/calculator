@@ -1,0 +1,6 @@
+{"Time":"2019-03-20T19:47:36.7817247Z","Data":{"Input":"1+2","Output":{"IsSuccessful":true,"Result":3.0,"Diagnostics":[]}}}
+{"Time":"2019-03-20T19:47:44.6804762Z","Data":{"Input":"#sfd;'l","Output":{"IsSuccessful":false,"Result":"NaN","Diagnostics":[{"Severity":0,"Kind":0,"Span":{"Start":0,"Length":1,"End":1},"Parameters":[7,9]},{"Severity":0,"Kind":0,"Span":{"Start":1,"Length":3,"End":4},"Parameters":[10,8]}]}}}
+{"Time":"2019-03-20T19:47:47.6397588Z","Data":{"Input":"@+34","Output":{"IsSuccessful":false,"Result":"NaN","Diagnostics":[{"Severity":0,"Kind":0,"Span":{"Start":0,"Length":1,"End":1},"Parameters":[7,9]}]}}}
+{"Time":"2019-03-20T19:47:51.863651Z","Data":{"Input":"34","Output":{"IsSuccessful":true,"Result":34.0,"Diagnostics":[]}}}
+{"Time":"2019-03-20T19:47:52.9675866Z","Data":{"Input":"234","Output":{"IsSuccessful":true,"Result":234.0,"Diagnostics":[]}}}
+{"Time":"2019-03-20T19:47:54.6397204Z","Data":{"Input":"234+65","Output":{"IsSuccessful":true,"Result":299.0,"Diagnostics":[]}}}
