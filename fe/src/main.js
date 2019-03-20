@@ -35,7 +35,7 @@ ko.bindingHandlers.enterkey = {
 };
 
 function ApiClient() {
-    this.baseUrl = "http://localhost:5000";
+    this.baseUrl = "";
     this.calculate = function (input, successCallback, failedCallback) {
         $.post(this.baseUrl + "/api/evaluator/evaluate",
             JSON.stringify({ expression: input }),
@@ -44,7 +44,7 @@ function ApiClient() {
     };
 
     this.getLog = function (successCallback, failedCallback) {
-        $.get(this.baseUrl + "this.baseUrl + /api/evaluator/log",
+        $.get(this.baseUrl + "/api/evaluator/log",
             successCallback,
             failedCallback);
     };
