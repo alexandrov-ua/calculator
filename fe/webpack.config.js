@@ -37,6 +37,6 @@ module.exports = {
         })
     ],
     devServer: {
-        contentBase: 'dist'
+        contentBase: path.join(__dirname, 'dist'),
     }
 };
