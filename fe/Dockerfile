@@ -3,6 +3,7 @@ WORKDIR /build
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN ls -R
 RUN npm run build
 
 FROM nginx
