@@ -17,6 +17,10 @@
             font-family: monospace;
             outline: none;
         }
+
+        .error {
+            color: red;
+        }
     </style>
     <script src="main.js"></script>
 </head>
@@ -25,12 +29,42 @@
     <div>
         <div id="container" style="overflow-y: auto; display: block; max-height: 90vh;">
             <table id="table">
-                <tbody data-bind="foreach: logItems">
-                    <tr>
-                        <td data-bind="text: val, style: {'color': isError() == true ? 'red' : 'chartreuse'}"></td>
-                    </tr>
+                <tbody data-bind="template: { foreach: logItems, name: getLogType }">
                 </tbody>
             </table>
+            <script type="text/html" id="success">
+                <tr>
+                    <td>><label data-bind="text: input"></label></td>
+                </tr>
+                <tr>
+                    <td><label data-bind="text: output"></label></td>
+                </tr>
+            </script>
+            <script type="text/html" id="error">
+                <tr>
+                    <td>><label data-bind="text: input"></label></td>
+                </tr>
+                <tr>
+                    <td><label data-bind="text: arrow" class="error"></label></td>
+                </tr>
+                <tr>
+                    <td><label data-bind="text: output" class="error"></label></td>
+                </tr>
+            </script>
+            <script type="text/html" id="info">
+                <tr>
+                    <td>
+                        ><label data-bind="text: input"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div data-bind="foreach: outputs">
+                            <li data-bind="text: $data"></li>
+                        </div>
+                    </td>
+                </tr>
+            </script>
         </div>
         <p>
             ><input id="input" type="text" onblur="this.focus()"

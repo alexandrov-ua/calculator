@@ -1,14 +1,6 @@
 import * as ko from "knockout"
 import { ApiClient } from "./ApiClient"
 
-function processResponse(response) {
-    if (response.isSuccessful) {
-        return response.result;
-    }
-    var error = response.diagnostics[0];
-    return makeArrow(error.span) + " " + getErrorMessage(error.kind, error.parameters);
-}
-
 function getErrorMessage(kind, params) {
     switch (kind) {
         case "UnexpectedToken":
@@ -30,17 +22,32 @@ function makeArrow(span) {
 }
 
 class LogItem {
-    constructor(text) {
-        this.val = ko.observable(text);
-        this.isError = ko.observable(false);
+    constructor(input, output, arrow, type) {
+        this.input = ko.observable(input);
+        this.output = ko.observable(output);
+        this.arrow = ko.observable(arrow);
+        this.type = ko.observable(type);
+    }
+}
+
+class InfoLogItem {
+    constructor(input, strs) {
+        this.input = ko.observable(input);
+        this.outputs = ko.observableArray(strs);
+        this.type = ko.observable("info");
     }
 }
 
 class AppViewModel {
     constructor() {
         this.input = ko.observable("");
-        this.logItems = ko.observableArray([new LogItem("Simple math expressions evaluator. For help type: #help")]).extend({ scrollFollow: '#container' });
+        this.logItems = ko.observableArray([new InfoLogItem("", ["For help type: #help"])]).extend({ scrollFollow: '#container' });
         this.client = new ApiClient();
+    }
+
+    getLogType(logItem) {
+        console.log(logItem.type());
+        return logItem.type();
     }
 
     onEnterKey() {
@@ -49,7 +56,6 @@ class AppViewModel {
     }
 
     processInput(input) {
-        this.logItems.push(new LogItem(">" + input));
         switch (input.trim()) {
             case "#help":
                 this.showHelp();
@@ -75,37 +81,44 @@ class AppViewModel {
         this.client.getLog((response) => {
             for (var i = 0; i < response.length; i++) {
                 var log = response[i];
-                this.logItems.push(new LogItem(">" + log.input));
-                var item = new LogItem(processResponse(log.output));
-                if (!log.output.isSuccessful) {
-                    item.isError(true);
+                if (log.output.isSuccessful == true) {
+                    this.logItems.push(new LogItem(log.input, log.output.result, "", "success"));
+                } else {
+                    var error = log.output.diagnostics[0];
+                    this.logItems.push(new LogItem(log.input, getErrorMessage(error.kind, error.parameters), makeArrow(error.span), "error"));
                 }
-                this.logItems.push(item);
             }
         });
     }
 
     calculate(input) {
-        var item = new LogItem("...");
+        var item = new LogItem(input, "...", "", "success");
         this.logItems.push(item);
         this.client.calculate(input,
             function (response) {
-                item.val(processResponse(response));
-                if (!response.isSuccessful) {
-                    item.isError(true);
+                if (response.isSuccessful) {
+                    item.output(response.result);
+                } else {
+                    var error = response.diagnostics[0];
+                    item.output(getErrorMessage(error.kind, error.parameters));
+                    item.arrow(makeArrow(error.span));
+                    item.type("error");
                 }
             });
     }
 
     showHelp() {
-        this.logItems.push(new LogItem("Simple math expressions evaluator."));
-        this.logItems.push(new LogItem("Input example: 2+3*4"));
-        this.logItems.push(new LogItem("Supported operations: Binary: +-*/^ Unary: +- Parenthesis: ()"));
-        this.logItems.push(new LogItem("REPL commands:"));
-        this.logItems.push(new LogItem("#help - to show help"));
-        this.logItems.push(new LogItem("#cls - clear screen"));
-        this.logItems.push(new LogItem("#show-log - show log"));
-        this.logItems.push(new LogItem("#download-log - to download log of all operations"));
+        var msg = [
+            "Simple math expressions evaluator.",
+            "Input example: 2+3*4",
+            "Supported operations: Binary: +-*/^ Unary: +- Parenthesis: ()",
+            "REPL commands:",
+            "#help - to show help",
+            "#cls - clear screen",
+            "#show-log - show log",
+            "#download-log - to download log of all operations",
+        ];
+        this.logItems.push(new InfoLogItem(this.input(), msg));
     }
 }
 
