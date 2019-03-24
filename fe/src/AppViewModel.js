@@ -29,7 +29,7 @@ function makeArrow(span) {
     return res;
 }
 
-class Item {
+class LogItem {
     constructor(text) {
         this.val = ko.observable(text);
         this.isError = ko.observable(false);
@@ -39,7 +39,7 @@ class Item {
 class AppViewModel {
     constructor() {
         this.input = ko.observable("");
-        this.items = ko.observableArray([new Item("Simple math expressions evaluator. For help type: #help")]).extend({ scrollFollow: '#container' });
+        this.logItems = ko.observableArray([new LogItem("Simple math expressions evaluator. For help type: #help")]).extend({ scrollFollow: '#container' });
         this.client = new ApiClient();
     }
 
@@ -49,13 +49,13 @@ class AppViewModel {
     }
 
     processInput(input) {
-        this.items.push(new Item(">" + input));
+        this.logItems.push(new LogItem(">" + input));
         switch (input.trim()) {
             case "#help":
                 this.showHelp();
                 break;
             case "#cls":
-                this.items([]);
+                this.logItems([]);
                 break;
             case "#show-log":
                 this.showLog();
@@ -71,23 +71,23 @@ class AppViewModel {
     }
 
     showLog() {
-        this.items([]);
-        this.client.getLog(function (response) {
+        this.logItems([]);
+        this.client.getLog((response) => {
             for (var i = 0; i < response.length; i++) {
                 var log = response[i];
-                this.items.push(new Item(">" + log.input));
-                var item = new Item(processResponse(log.output));
+                this.logItems.push(new LogItem(">" + log.input));
+                var item = new LogItem(processResponse(log.output));
                 if (!log.output.isSuccessful) {
                     item.isError(true);
                 }
-                this.items.push(item);
+                this.logItems.push(item);
             }
         });
     }
 
     calculate(input) {
-        var item = new Item("...");
-        this.items.push(item);
+        var item = new LogItem("...");
+        this.logItems.push(item);
         this.client.calculate(input,
             function (response) {
                 item.val(processResponse(response));
@@ -98,15 +98,15 @@ class AppViewModel {
     }
 
     showHelp() {
-        this.items.push(new Item("Simple math expressions evaluator."));
-        this.items.push(new Item("Input example: 2+3*4"));
-        this.items.push(new Item("Supported operations: Binary: +-*/^ Unary: +- Parenthesis: ()"));
-        this.items.push(new Item("REPL commands:"));
-        this.items.push(new Item("#help - to show help"));
-        this.items.push(new Item("#cls - clear screen"));
-        this.items.push(new Item("#show-log - show log"));
-        this.items.push(new Item("#download-log - to download log of all operations"));
+        this.logItems.push(new LogItem("Simple math expressions evaluator."));
+        this.logItems.push(new LogItem("Input example: 2+3*4"));
+        this.logItems.push(new LogItem("Supported operations: Binary: +-*/^ Unary: +- Parenthesis: ()"));
+        this.logItems.push(new LogItem("REPL commands:"));
+        this.logItems.push(new LogItem("#help - to show help"));
+        this.logItems.push(new LogItem("#cls - clear screen"));
+        this.logItems.push(new LogItem("#show-log - show log"));
+        this.logItems.push(new LogItem("#download-log - to download log of all operations"));
     }
 }
 
-export { AppViewModel, Item }
+export { AppViewModel, LogItem as Item }

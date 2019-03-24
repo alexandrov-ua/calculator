@@ -25,7 +25,7 @@
     <div>
         <div id="container" style="overflow-y: auto; display: block; max-height: 90vh;">
             <table id="table">
-                <tbody data-bind="foreach: items">
+                <tbody data-bind="foreach: logItems">
                     <tr>
                         <td data-bind="text: val, style: {'color': isError() == true ? 'red' : 'chartreuse'}"></td>
                     </tr>
