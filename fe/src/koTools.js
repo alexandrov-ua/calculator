@@ -27,6 +27,34 @@ class KoTools {
                 });
             }
         };
+
+        ko.bindingHandlers.upkey = {
+            init: function (element, valueAccessor, allBindings, viewModel) {
+                var callback = valueAccessor();
+                $(element).keydown(function (event) {
+                    var keyCode = (event.which ? event.which : event.keyCode);
+                    if (keyCode === 38) {
+                        callback.call(viewModel);
+                        return false;
+                    }
+                    return true;
+                });
+            }
+        };
+
+        ko.bindingHandlers.downkey = {
+            init: function (element, valueAccessor, allBindings, viewModel) {
+                var callback = valueAccessor();
+                $(element).keydown(function (event) {
+                    var keyCode = (event.which ? event.which : event.keyCode);
+                    if (keyCode === 40) {
+                        callback.call(viewModel);
+                        return false;
+                    }
+                    return true;
+                });
+            }
+        };
     }
 }
 

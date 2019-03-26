@@ -43,16 +43,34 @@ class AppViewModel {
         this.input = ko.observable("");
         this.logItems = ko.observableArray([new InfoLogItem("", ["For help type: #help"])]).extend({ scrollFollow: '#container' });
         this.client = new ApiClient();
+        this.inputHistoryPointer = 0;
     }
 
     getLogType(logItem) {
-        console.log(logItem.type());
         return logItem.type();
     }
 
     onEnterKey() {
+        this.inputHistoryPointer = 0;
         let input = this.input();
         this.processInput(input);
+    }
+
+    onUpKey() {
+        if (this.inputHistoryPointer < this.logItems().length - 1) {
+            this.inputHistoryPointer += 1;
+            this.input(this.logItems()[this.logItems().length - this.inputHistoryPointer].input());
+        }
+    }
+
+    onDownKey() {
+        if (this.inputHistoryPointer > 1) {
+            this.inputHistoryPointer -= 1;
+            this.input(this.logItems()[this.logItems().length - this.inputHistoryPointer].input());
+        } else {
+            this.inputHistoryPointer = 0;
+            this.input("");
+        }
     }
 
     processInput(input) {
