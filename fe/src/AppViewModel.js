@@ -110,12 +110,13 @@ class AppViewModel {
     }
 
     calculate(input) {
-        var item = new LogItem(input, "...", "", "success");
+        var item = new LogItem(input, "...", "...", "error");
         this.logItems.push(item);
         this.client.calculate(input,
             function (response) {
                 if (response.isSuccessful) {
                     item.output(response.result);
+                    item.type("success");
                 } else {
                     var error = response.diagnostics[0];
                     item.output(getErrorMessage(error.kind, error.parameters));
